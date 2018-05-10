@@ -1,24 +1,18 @@
 {
-  "name": "kitty-hats-crypto-goods",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "name": "express-app",
+  "version": "0.0.0",
+  "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node ./bin/www"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/kitty-hats/kitty-hats-crypto-goods.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/kitty-hats/kitty-hats-crypto-goods/issues"
-  },
-  "homepage": "https://github.com/kitty-hats/kitty-hats-crypto-goods#readme",
   "dependencies": {
+    "cookie-parser": "~1.4.3",
+    "debug": "~2.6.9",
     "express": "^4.16.3",
-    "puppeteer": "^1.4.0"
+    "http-errors": "~1.6.2",
+    "jade": "~1.11.0",
+    "morgan": "~1.9.0",
+    "puppeteer": "^1.4.0",
+    "stylus": "0.54.5"
   }
 }

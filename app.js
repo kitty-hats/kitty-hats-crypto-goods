@@ -20,6 +20,8 @@ app.use(cookieParser());
 app.use(stylus.middleware(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.listen(80);
+
 const captureScreenshots = async (req, res) => {
   const browser = await puppeteer.launch()
   const page = await browser.newPage()
