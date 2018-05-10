@@ -10,8 +10,7 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
-
-app.listen(80);
+app.set('view engine', 'html');
 
 const captureScreenshots = async (req, res) => {
   const browser = await puppeteer.launch({args: ['--no-sandbox', '--disable-setuid-sandbox']})
@@ -20,13 +19,21 @@ const captureScreenshots = async (req, res) => {
   var id = req.params.id;
 
   await page.setUserAgent('page');
-  await page.goto(`https:\/\/stage.kittyhats.co/#/cg/${id}`)
-  await page.waitFor(5000);
-  await page.setViewport({ width: 1675, height: 1675 });
-  await page.screenshot({path: `/tmp/${id}.png`, clip: {x: 0, y: 10, width: 560, height: 530}});
-  browser.close()
+  await page.goto(`https:\/\/kittyhats.co/#/cg/${id}`)
+ 
+  var intervalId = setInterval(async function(){
+    var loaded = await page.evaluate(function(){
+      return window.allItemsLoaded;
+    })
+    if(loaded === true){
+      await page.setViewport({ width: 1675, height: 1675 });
+      await page.screenshot({path: `/tmp/${id}.png`, clip: {x: 0, y: 10, width: 550, height: 530}});
+      browser.close()
+      res.sendFile(`/tmp/${id}.png`)
+      clearInterval(intervalId)
+    }
+  }, 100);
 
-  res.sendFile(`/tmp/${id}.png`)
 }
 
 app.get('/:id.png', captureScreenshots)
